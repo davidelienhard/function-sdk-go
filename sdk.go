@@ -136,8 +136,9 @@ func Serve(fn v1beta1.FunctionRunnerServiceServer, o ...ServeOption) error {
 	if err != nil {
 		return errors.Wrapf(err, "cannot listen for %s connections at address %q", so.Network, so.Address)
 	}
+	maxMsgSize := 10000648
 
-	srv := grpc.NewServer(grpc.Creds(so.Credentials))
+	srv := grpc.NewServer(grpc.MaxMsgSize(maxMsgSize), grpc.MaxRecvMsgSize(maxMsgSize), grpc.MaxSendMsgSize(maxMsgSize), grpc.Creds(so.Credentials))
 	reflection.Register(srv)
 	v1beta1.RegisterFunctionRunnerServiceServer(srv, fn)
 	return errors.Wrap(srv.Serve(lis), "cannot serve mTLS gRPC connections")

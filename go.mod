@@ -1,4 +1,4 @@
-module github.com/crossplane/function-sdk-go
+module github.com/davidelienhard/function-sdk-go
 
 go 1.21
 
